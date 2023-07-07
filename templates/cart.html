@@ -1,0 +1,77 @@
+{% extends 'index.html' %}
+{% load static %}
+{% load cart %}
+{% block title %}
+    <title>Cart</title>
+    {% endblock %}
+{% block body %}
+    <!-- Start Banner Area -->
+    <section class="banner-area organic-breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                <div class="col-first">
+                    <h1>Shopping Cart</h1>
+                    <nav class="d-flex align-items-center">
+                        <a href="/">Home<span class="lnr lnr-arrow-right"></span></a>
+                        <a href="/shop/">Cart</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Banner Area -->
+
+    <!--================Cart Area =================-->
+    <section class="cart_area">
+        <div class="container">
+            <div class="cart_inner">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Image</th>
+                                <th scope="col">Product</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Total</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in Product %}
+                            <tr>
+                                <td>
+                                    <div class="media">
+                                        <div class="d-flex">
+                                            {% if i.pic1.url %}
+                                            <img src="{{i.pic1.url}}" style="width:100px;height:100px" alt="">
+                                          
+                                            {%  else %}
+                                            <img src="{% static 'img/noimg/noimage.png' %}" style="width:100px;height:100px" alt="">
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><p>{{i.name}}</p></td>
+                                <td><h5>Rs{{i.finalprice}}</h5></td>
+                                <td>
+                                    <div class="product_count">
+                                        <input type="number" name="q" value="{{request|cartQuantity:i.pid}}">
+                                        <input type="hidden" name="pid" value="{{i.pid}}">
+                                    </div>
+                                </td>
+                                <td><h5>{{request|cartTotal:i.pid}}</h5></td>
+                                <td><a href ="/updateCart/">Update</a></td>
+                                <td><a href ="/deleteCart/">Delete</a></td>
+                            
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================End Cart Area =================-->
+{% endblock %}
